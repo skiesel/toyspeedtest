@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Toy Speed Test</title>
+<script src="../js/script.js"></script>
+<style>
+    .red { color : red; }
+</style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td class="label" id="latencylabel">Latency:</td>
+            <td id="latency"></td>
+        </tr>
+        <tr>
+            <td class="label" id="downloadlabel">Download:</td>
+            <td id="download"></dt>
+        </tr>
+        <tr>
+            <td class="label" id="uploadlabel">Upload:</td>
+            <td id="upload"></td>
+        </tr>
+    </table>
+<script>
+function resetClasses() {
+    var labels = document.getElementsByClassName("label");
+    for(var i = 0; i < labels.length; i++) {
+        labels[i].className = "label";
+    }
+}
+
+function setClass(elementId, className) {
+    resetClasses();
+    var element = document.getElementById(elementId);
+    element.className = element.className + " " + className;
+}
+
+setClass("latencylabel", "red");
+latencyTest(function(value) {
+    document.getElementById("latency").innerHTML = value + " ms";
+    
+    setClass("downloadlabel", "red");
+    downloadTest(function(value) {
+        document.getElementById("download").innerHTML = value + " MB/sec";
+        
+        setClass("uploadlabel", "red");
+        uploadTest(function(value) {
+            document.getElementById("upload").innerHTML = value + " MB/sec";
+        }, 10, 1);
+
+    }, 1, 1);
+
+}, 10);
+</script>
+</body>
+</html>
